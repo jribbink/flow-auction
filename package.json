@@ -2,7 +2,9 @@
   "name": "init",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "emulator": "cd ./libs/chain-interactions && flow emulator start --contracts || flow project deploy --network emulator"
+  },
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",

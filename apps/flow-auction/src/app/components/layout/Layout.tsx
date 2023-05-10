@@ -14,14 +14,9 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import WalletView from '../WalletView/WalletView';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { ROUTES, RouteConfig } from '../../config/route-config';
 
 export default function WithSubnavigation({
   children,
@@ -88,17 +83,16 @@ export default function WithSubnavigation({
 const DesktopNav = () => {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('gray.800', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
+      {ROUTES.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? '#'}
+                href={navItem.path}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
@@ -110,23 +104,6 @@ const DesktopNav = () => {
                 {navItem.label}
               </Link>
             </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={'xl'}
-                minW={'sm'}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
           </Popover>
         </Box>
       ))}
@@ -134,10 +111,10 @@ const DesktopNav = () => {
   );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+const DesktopSubNav = ({ label, path, subLabel }: RouteConfig) => {
   return (
     <Link
-      href={href}
+      href={path}
       role={'group'}
       display={'block'}
       p={2}
@@ -178,22 +155,20 @@ const MobileNav = () => {
       p={4}
       display={{ md: 'none' }}
     >
-      {NAV_ITEMS.map((navItem) => (
+      {ROUTES.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure();
-
+const MobileNavItem = ({ label, path }: RouteConfig) => {
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack spacing={4}>
       <Flex
         py={2}
         as={Link}
-        href={href ?? '#'}
+        href={path}
         justify={'space-between'}
         align={'center'}
         _hover={{
@@ -206,56 +181,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {label}
         </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={'all .25s ease-in-out'}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          />
-        )}
       </Flex>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align={'start'}
-        >
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
     </Stack>
   );
 };
-
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
-
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'All Auctions',
-    href: '/',
-  },
-  {
-    label: 'My Auctions',
-    href: '/my-auctions',
-  },
-  {
-    label: 'My Bids',
-    href: '/my-bids',
-  },
-];

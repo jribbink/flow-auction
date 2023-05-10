@@ -1,25 +1,17 @@
-import './config';
+import bootstrap from './config/bootstrap';
 import { ChakraProvider } from '@chakra-ui/react';
-import { Route, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/HomePage/HomePage';
 import Layout from './components/Layout/Layout';
 import AuctionPage from './pages/AuctionPage/AuctionPage';
 import MyAuctionsPage from './pages/MyAuctionsPage/MyAuctionsPage';
+import { ROUTES } from './config/route-config';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    Component: Home,
-  },
-  {
-    path: '/auctions/:auctionId',
-    Component: AuctionPage,
-  },
-  {
-    path: '/my-auctions',
-    Component: MyAuctionsPage,
-  },
-]);
+bootstrap();
+
+const router = createBrowserRouter(
+  ROUTES.map((r) => ({ path: r.path, Component: r.Component }))
+);
 
 export function App() {
   return (

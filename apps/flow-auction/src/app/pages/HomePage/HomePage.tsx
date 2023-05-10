@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import AuctionGrid from '../../components/AuctionGrid/AuctionGrid';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Container maxW="container.lg" p="4" rounded="lg" bg="white">
       <AuctionGrid></AuctionGrid>

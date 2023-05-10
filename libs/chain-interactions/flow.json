@@ -1,14 +1,82 @@
 {
-	"networks": {
-		"emulator": "127.0.0.1:3569",
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "1464f8dd49b8deb1a5901896df8dbbfdcdda191fac6b1c69fbd36ed4d09db049"
-		}
-	}
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "abe9c3fc78fd05a3f1d478a81260a05e574533af4b374b7bb6912168a59e6348"
+    }
+  },
+  "contracts": {
+    "NonFungibleToken": {
+      "source": "./cadence/contracts/NonFungibleToken.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "FungibleToken": {
+      "source": "./cadence/contracts/FungibleToken.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "FlowToken": {
+      "source": "./cadence/contracts/FlowToken.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "FlowAuction": {
+      "source": "./cadence/contracts/FlowAuction.cdc"
+    },
+    "LinkedAccountMetadataViews": {
+      "source": "./cadence/contracts/LinkedAccountMetadataViews.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "LinkedAccounts": {
+      "source": "./cadence/contracts/LinkedAccounts.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "MetadataViews": {
+      "source": "./cadence/contracts/MetadataViews.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    },
+    "ViewResolver": {
+      "source": "./cadence/contracts/ViewResolver.cdc",
+      "aliases": {
+        "testnet": "0x631e88ae7f1d7c20",
+        "mainnet": "0x631e88ae7f1d7c20"
+      }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": [
+        "NonFungibleToken",
+        "FungibleToken",
+        "FlowToken",
+        "FlowAuction",
+        "LinkedAccountMetadataViews",
+        "LinkedAccounts",
+        "MetadataViews",
+        "ViewResolver"
+      ]
+    }
+  }
 }
