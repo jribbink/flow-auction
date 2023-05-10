@@ -32,6 +32,12 @@ export default defineConfig({
   //  ],
   // },
 
+  resolve: {
+    alias: {
+      'node-fetch': './node_modules/node-fetch/browser.js',
+    },
+  },
+
   test: {
     globals: true,
     cache: {

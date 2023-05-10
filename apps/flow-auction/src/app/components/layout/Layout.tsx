@@ -20,6 +20,8 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import WalletView from '../WalletView/WalletView';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export default function WithSubnavigation({
   children,
@@ -29,7 +31,7 @@ export default function WithSubnavigation({
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box>
+    <Box h="100vh" backgroundColor="#EEEEEE">
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -61,7 +63,7 @@ export default function WithSubnavigation({
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}
           >
-            Logo
+            Flow Bid
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -69,43 +71,16 @@ export default function WithSubnavigation({
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}
-        >
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'#'}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300',
-            }}
-          >
-            Sign Up
-          </Button>
-        </Stack>
+        <WalletView></WalletView>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
 
-      <Box minH="100vh">{children}</Box>
+      <Box flexGrow={1} marginTop="3">
+        {children}
+      </Box>
     </Box>
   );
 }
@@ -272,41 +247,15 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
+    label: 'All Auctions',
+    href: '/',
   },
   {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
+    label: 'My Auctions',
+    href: '/my-auctions',
   },
   {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
+    label: 'My Bids',
+    href: '/my-bids',
   },
 ];
