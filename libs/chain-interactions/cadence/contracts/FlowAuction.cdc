@@ -1,14 +1,18 @@
-import FlowToken from "./FlowToken.cdc"
+import FlowToken from 0x0ae53cb6e3f42a79
 import LinkedAccounts from "./LinkedAccounts.cdc"
 
 pub contract FlowAuction {
+  pub event AuctionCreated(auction: Auction)
+
   pub struct Auction {
+    pub let seller: Address
     pub let id: Int
     pub let bids: [Bid]
 
-    init(id: Int, bids: [Bid]) {
+    init(id: Int, seller: Address) {
+      self.seller = seller
       self.id = id
-      self.bids = bids
+      self.bids = []
     }
 
     pub fun createBid(auctionId: Int, bidder: Address, amount: UFix64) {
@@ -44,33 +48,30 @@ pub contract FlowAuction {
 
   pub let auctions: [Auction]
   access(self) let balances: {Address: UFix64}
-  pub var seller: Address
   access(self) var vault: @FlowToken.Vault
 
-  init(seller: AuthAccount) {
+  init() {
     self.auctions = []
     self.balances = {}
-    self.seller = seller.address
-    self.vault <- create FlowToken.Vault(balance: 0.0)
-
-    // Make child account
-    let childAccount = AuthAccount(payer: self)
+    self.vault <- (FlowToken.createEmptyVault() as! @FlowToken.Vault)
   }
 
-  pub fun createAuction (acct: AuthAccount, bids: [Bid]) {
-    // Make sure only the seller can create an auction
-    if acct.address != self.seller {
-      panic("Only the seller can create an auction")
-    }
-
+  // I know.  Anti-pattern.  But it's a hackathon.
+  pub fun createAuction (seller: AuthAccount): Auction {
     // Create auction
     var id: Int = self.auctions.length
-    let auction = Auction(id: id, bids: bids)
+    let auction = Auction(id: id, seller: seller.address)
 
     // Add auction to list
     self.auctions.append(auction)
+
+    // Emit event
+    emit AuctionCreated(auction: auction)
+
+    return auction
   }
 
+  // I know.  Anti-pattern.  But it's a hackathon.
   pub fun bid (bidder: AuthAccount, auctionId: Int, amount: UFix64) {
     let auction = self.auctions[auctionId]
 
@@ -80,20 +81,19 @@ pub contract FlowAuction {
     }
 
     // Make sure bidder is not the seller
-    if bidder.address == self.seller {
+    if bidder.address == auction.seller {
       panic("Seller cannot bid on their own auction")
     }
 
     // Make sure bidder has enough funds
-    let balance = getAccount(bidder.address).getCapability(/public/flowTokenBalance).borrow<&FlowToken.Vault>()!.balance
+    let vaultRef: &FlowToken.Vault = bidder.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)!
+    let balance: UFix64 = vaultRef.balance
 
     // Add bid to auction
     auction.createBid(auctionId: auctionId, bidder: bidder.address, amount: amount)
 
     // Transfer funds from bidder to vault
-    let vaultRef = getAccount(self.seller).getCapability(/public/flowTokenBalance).borrow<&FlowToken.Vault>()!
-    vaultRef.withdraw(amount: amount)
+    self.vault.deposit(from: <-vaultRef.withdraw(amount: amount))
   }
-
-
 }
+ 

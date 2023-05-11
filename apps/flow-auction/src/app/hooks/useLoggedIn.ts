@@ -7,8 +7,7 @@ export function useLoggedIn() {
 
   useEffect(() => {
     const unsubscribe = fcl.currentUser().subscribe((user: CurrentUser) => {
-      console.log('user', user);
-      setLoggedIn(user.loggedIn!!);
+      setLoggedIn(user.loggedIn || false);
     });
 
     return () => unsubscribe();

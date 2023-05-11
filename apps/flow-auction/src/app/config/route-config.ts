@@ -9,7 +9,7 @@ export interface RouteConfig {
   label?: string;
   subLabel?: string;
   path: string;
-  Component: ComponentType<{}> | null | undefined;
+  Component: ComponentType<object> | null | undefined;
   inMenu?: boolean;
 }
 

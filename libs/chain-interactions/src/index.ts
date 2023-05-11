@@ -1,1 +1,1 @@
-export * from './lib/chain-interactions';
+export * from './lib';
