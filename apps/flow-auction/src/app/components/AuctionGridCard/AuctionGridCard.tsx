@@ -9,7 +9,7 @@ export default function AuctionGridCard({ auction }: { auction: Auction }) {
   const remainingString = useExpiryString(auction.endTimestamp);
 
   return (
-    <Card rounded="md" size="lg">
+    <Card rounded="lg" size="lg" shadow="lg">
       <NavLink to={`/auctions/${auction.id}`}>
         <Image
           aspectRatio={1}

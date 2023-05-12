@@ -34,17 +34,38 @@ export default function BiddingCard({
 
   return (
     <Flex rounded="lg" background="#333333" flexDir="column" p="4">
-      <Heading size="lg" textColor="white" textAlign="center" mb="4">
+      <Heading fontSize="2xl" textColor="white" textAlign="center" mb="4">
         {highestBid != null
-          ? `Highest Bid: ${highestBid.toFixed(2)} FLOW`
+          ? `Highest Bid - ${highestBid.toFixed(8)} FLOW`
           : 'No Bids Yet'}
       </Heading>
-      {bids.map((bid: Bid) => (
-        <Box key={bid.id} p="2" background="white" rounded="xl">
-          <Text>{bid.amount}</Text>
-          <Text>{bid.bidder}</Text>
-        </Box>
-      ))}
+
+      <Box
+        overflow="auto"
+        h="320px"
+        display="flex"
+        flexDirection="column"
+        gap="2"
+      >
+        {[...bids].reverse().map((bid: Bid) => (
+          <Box
+            key={bid.id}
+            p="2"
+            display="flex"
+            flexDirection="row"
+            rounded="lg"
+            backgroundColor="white"
+          >
+            <Text fontWeight="bold" textColor="black">
+              {bid.bidder}
+            </Text>
+            <Spacer></Spacer>
+            <Text fontWeight="bold" textColor="black">
+              {bid.amount.toFixed(8)} FLOW
+            </Text>
+          </Box>
+        ))}
+      </Box>
 
       <Spacer></Spacer>
 

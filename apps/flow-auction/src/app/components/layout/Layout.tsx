@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
   useColorModeValue,
   useDisclosure,
+  Button,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import WalletView from '../WalletView/WalletView';
@@ -57,13 +58,23 @@ export default function WithSubnavigation({
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={'left'}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}
+          <Button
+            variant="unstyled"
+            onClick={() => (window.location.href = '/')}
           >
-            Flow Bid
-          </Text>
+            <Text
+              textAlign={'left'}
+              fontFamily={'heading'}
+              color={useColorModeValue('gray.800', 'white')}
+              fontSize="xl"
+              fontWeight="bold"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              Flow Bid
+            </Text>
+          </Button>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -77,7 +88,7 @@ export default function WithSubnavigation({
         <MobileNav />
       </Collapse>
 
-      <Box paddingY="4" flex={1} overflow="scroll">
+      <Box paddingY="4" flex={1} overflow="auto">
         {children}
       </Box>
     </Flex>
@@ -91,7 +102,12 @@ const DesktopNav = () => {
   return (
     <Stack direction={'row'} spacing={4}>
       {ROUTES.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box
+          key={navItem.label}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+        >
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Link

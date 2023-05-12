@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import AuctionGridCard from '../../components/AuctionGridCard/AuctionGridCard';
 import { useMyAuctions } from '../../hooks/useMyAuctions';
 import { Auction } from '@flow-bids/models';
+import AuctionListCard from '../../components/AuctionListCard/AuctionListCard';
 
 export default function MyAuctionsPage() {
-  const auctions = useMyAuctions();
+  const { data: auctions } = useMyAuctions();
 
   return (
     <Container
@@ -20,12 +21,12 @@ export default function MyAuctionsPage() {
       flexDirection="column"
     >
       <Flex alignItems="start">
-        <Heading size="md">My Auctions</Heading>
+        <Heading size="lg">My Auctions</Heading>
         <Button as={Link} ml="auto" to="/auctions/create" colorScheme="green">
           New Auction
         </Button>
       </Flex>
-      <Flex mt="4" flexDir="column" flexGrow={1}>
+      <Flex mt="6" flexDir="column" flexGrow={1} gap={2}>
         {auctions.length === 0 ? (
           <Flex justifyContent="center" my="auto">
             <Text>
@@ -37,10 +38,10 @@ export default function MyAuctionsPage() {
           </Flex>
         ) : (
           auctions.map((auction: Auction) => (
-            <AuctionGridCard
-              key={auction.id}
+            <AuctionListCard
               auction={auction}
-            ></AuctionGridCard>
+              key={auction.id}
+            ></AuctionListCard>
           ))
         )}
       </Flex>

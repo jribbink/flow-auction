@@ -35,8 +35,13 @@ export default function AuctionPage() {
         <>
           <SimpleGrid columns={2} gap="14">
             <Flex flexDirection="column">
-              <Heading fontWeight="normal">{auction?.title}</Heading>
-              <Image src={auction?.image} width="100%" aspectRatio={1}></Image>
+              <Heading>{auction?.title}</Heading>
+              <Image
+                src={auction?.image}
+                width="100%"
+                aspectRatio={1}
+                mt="4"
+              ></Image>
             </Flex>
             <BiddingCard bids={auction.bids} auction={auction}></BiddingCard>
           </SimpleGrid>

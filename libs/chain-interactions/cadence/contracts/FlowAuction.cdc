@@ -111,11 +111,9 @@ pub contract FlowAuction {
     let vaultRef: &FlowToken.Vault = bidder.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)!
     let balance: UFix64 = vaultRef.balance
 
-    var amount = self.auctions[auctionId].bidPrice
+    var amount = 0.0
 
     if self.auctions[auctionId].bids.length > 0 {
-      amount = self.auctions[auctionId].getHighestBid().amount + self.auctions[auctionId].bidPrice
-
       // Return back to previous highest bidder
       let receiverRef = getAccount(self.auctions[auctionId].getHighestBid().bidder)
           .getCapability(/public/flowTokenReceiver)
@@ -125,7 +123,7 @@ pub contract FlowAuction {
       // Deposit the withdrawn tokens in the recipient's receiver
       receiverRef.deposit(from: <- self.vault.withdraw(amount: self.auctions[auctionId].getHighestBid().amount))
 
-      amount = amount + 0.01
+      amount = self.auctions[auctionId].getHighestBid().amount + 0.01
     } else {
       amount = self.auctions[auctionId].startPrice
     }
