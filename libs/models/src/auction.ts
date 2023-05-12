@@ -6,8 +6,9 @@ export interface Auction {
   title: string;
   description: string;
   bidPrice: number;
+  startPrice: number;
   seller: string;
-  endTime: number;
+  endTimestamp: number;
   isSold: boolean;
   bids: Bid[];
 }

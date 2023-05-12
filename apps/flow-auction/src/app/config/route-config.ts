@@ -25,11 +25,6 @@ export const ROUTES: Array<RouteConfig> = [
     Component: MyAuctionsPage,
   },
   {
-    label: 'My Bids',
-    path: '/my-bids',
-    Component: BidsPage,
-  },
-  {
     path: '/auctions/create',
     Component: CreateAuctionPage,
     inMenu: false,

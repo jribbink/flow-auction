@@ -5,8 +5,7 @@ import useSWR from 'swr';
 const KEY = (auctionId: number | undefined) => `auctions/${auctionId}`;
 
 export function useAuction(auctionId: number | undefined) {
-  console.log(auctionId);
   return useSWR<Auction | null>(KEY(auctionId), () =>
-    auctionId ? getAuction(auctionId) : null
+    auctionId != null ? getAuction(auctionId) : null
   );
 }

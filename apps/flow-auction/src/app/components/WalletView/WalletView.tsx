@@ -1,13 +1,34 @@
 import { Button } from '@chakra-ui/button';
-import { useLoggedIn } from '../../hooks/useLoggedIn';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 import * as fcl from '@onflow/fcl';
-import { Box } from '@chakra-ui/layout';
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function WalletView() {
-  const loggedIn = useLoggedIn();
+  const user = useCurrentUser();
 
-  if (loggedIn === undefined) return null;
-  if (loggedIn) return <Box>Hello world</Box>;
+  if (user === undefined) return null;
+  if (user?.loggedIn)
+    return (
+      <Menu>
+        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+          {user.addr}
+        </MenuButton>
+        <MenuList>
+          <MenuItem
+            minH="48px"
+            display="flex"
+            justifyContent="center"
+            onClick={() => {
+              fcl.unauthenticate();
+            }}
+          >
+            Sign out
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    );
 
   return (
     <Button colorScheme="blue" onClick={() => fcl.authenticate()}>

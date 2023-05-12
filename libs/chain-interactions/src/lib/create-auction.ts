@@ -5,11 +5,19 @@ export interface CreateAuctionParams {
   title: string;
   description: string;
   bidPrice: number;
+  startPrice: number;
   endDate: Date;
 }
 
 export async function createAuction(
-  { image, title, description, bidPrice, endDate }: CreateAuctionParams,
+  {
+    image,
+    title,
+    description,
+    bidPrice,
+    startPrice,
+    endDate,
+  }: CreateAuctionParams,
   createdCallback?: (auctionId: number) => void
 ) {
   const txid = await fcl.mutate({
@@ -19,6 +27,7 @@ export async function createAuction(
       arg(title, t.String),
       arg(description, t.String),
       arg(bidPrice.toFixed(2), t.UFix64),
+      arg(startPrice.toFixed(2), t.UFix64),
       arg((endDate.getTime() / 1000).toFixed(8), t.UFix64),
     ],
   });

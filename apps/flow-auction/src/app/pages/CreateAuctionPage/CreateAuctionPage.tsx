@@ -17,6 +17,7 @@ export default function CreateAuctionPage() {
     title: null,
     description: null,
     bidPrice: 0.1,
+    startPrice: 0.1,
     image: null,
     endDate: null,
   });
@@ -32,9 +33,17 @@ export default function CreateAuctionPage() {
   const handleSaveAuction = useCallback(async () => {
     if (!validateAuction()) return;
 
-    await createAuction(auction as CreateAuctionParams, (auctionId) => {
-      console.log('auction created with id', auctionId);
-    });
+    const end = auction.endDate;
+    end?.setTime(end.getTime() + end.getTimezoneOffset() * 60 * 1000);
+
+    console.log(end?.toUTCString());
+
+    await createAuction(
+      { ...auction, endDate: end } as CreateAuctionParams,
+      (auctionId) => {
+        console.log('auction created with id', auctionId);
+      }
+    );
     navigate('/my-auctions');
   }, [auction, navigate]);
 
@@ -135,6 +144,19 @@ export default function CreateAuctionPage() {
                 setAuction({
                   ...auction,
                   bidPrice: Number(e.target.value) ?? null,
+                })
+              }
+            ></Input>
+          </Flex>
+
+          <Flex flexDirection="column" gap="2">
+            <Text>Starting Bid</Text>
+            <Input
+              value={auction.startPrice ?? ''}
+              onChange={(e) =>
+                setAuction({
+                  ...auction,
+                  startPrice: Number(e.target.value) ?? null,
                 })
               }
             ></Input>
