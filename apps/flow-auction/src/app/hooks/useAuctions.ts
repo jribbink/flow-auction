@@ -1,12 +1,14 @@
-import { getAuctions } from '@init/chain-interactions';
+import { getAuctions } from '@flow-bids/chain-interactions';
 import useSWR from 'swr';
-import { Auction } from '../models/auction';
+import { Auction } from '@flow-bids/models';
 import { useEffect } from 'react';
 import * as fcl from '@onflow/fcl';
 import { Event } from '@onflow/typedefs';
 
+const KEY = () => `auctions`;
+
 export function useAuctions() {
-  const swr = useSWR<Auction[]>('auctions', getAuctions);
+  const swr = useSWR<Auction[]>(KEY(), getAuctions);
 
   useEffect(() => {
     fcl.events('FlowAuction.AuctionCreated').subscribe((event: Event) => {

@@ -6,9 +6,8 @@ import { Box } from '@chakra-ui/layout';
 export default function WalletView() {
   const loggedIn = useLoggedIn();
 
-  if (loggedIn) {
-    return <Box>Hello world</Box>;
-  }
+  if (loggedIn === undefined) return null;
+  if (loggedIn) return <Box>Hello world</Box>;
 
   return (
     <Button colorScheme="blue" onClick={() => fcl.authenticate()}>

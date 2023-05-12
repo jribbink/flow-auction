@@ -1,4 +1,5 @@
 export default {
+  environment: 'dev',
   fcl: {
     'accessNode.api': 'https://rest-testnet.onflow.org',
     'discovery.wallet': 'https://fcl-discovery.onflow.org/testnet/authn',

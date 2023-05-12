@@ -1,55 +1,47 @@
 import { Box, Container, Grid, Heading, Text } from '@chakra-ui/layout';
 import { useParams } from 'react-router';
 import { Image } from '@chakra-ui/image';
-import { Auction } from '../../models/auction';
+import { Auction } from '@flow-bids/models';
 import BiddingCard from '../../components/BiddingCard/BiddingCard';
 import { Icon } from '@chakra-ui/icon';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { useAuction } from '../../hooks/useAuction';
+import { Spinner } from '@chakra-ui/react';
 
 export default function AuctionPage() {
   const params = useParams<{ auctionId: string }>();
-  const auction: Auction = {
-    id: 1,
-    name: 'Auction 1',
-    description: 'Auction 1 description',
-    image: 'https://via.placeholder.com/400',
-    bids: [
-      {
-        id: 1,
-        amount: 100,
-        bidder: '0x01',
-        auctionId: 1,
-      },
-      {
-        id: 2,
-        amount: 200,
-        bidder: '0x02',
-        auctionId: 1,
-      },
-      {
-        id: 3,
-        amount: 300,
-        bidder: '0x03',
-        auctionId: 1,
-      },
-    ],
-  } as Auction;
+  const { data: auction } = useAuction(
+    params.auctionId ? parseInt(params.auctionId) : undefined
+  );
 
   return (
     <Container
       maxW="container.lg"
       bgColor="white"
       rounded="xl"
-      shadow="lg"
-      p="4"
+      shadow="md"
+      p="8"
+      display="flex"
+      flexDirection="column"
     >
-      <Grid templateColumns="repeat(2, 1fr)">
-        <Box>
-          <Heading fontWeight="normal">{auction.name}</Heading>
-          <Image src={auction.image}></Image>
-        </Box>
-        <BiddingCard bids={auction.bids}></BiddingCard>
-      </Grid>
+      {auction ? (
+        <Grid templateColumns="repeat(2, 1fr)">
+          <Box>
+            <Heading fontWeight="normal">{auction?.title}</Heading>
+            <Image src={auction?.image}></Image>
+          </Box>
+          <BiddingCard bids={auction.bids}></BiddingCard>
+        </Grid>
+      ) : (
+        <Spinner
+          m="8"
+          my="14"
+          alignSelf="center"
+          mx="auto"
+          size="xl"
+          thickness="4px"
+        ></Spinner>
+      )}
     </Container>
   );
 }

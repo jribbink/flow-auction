@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@init/chain-interactions": ["libs/chain-interactions/src/index.ts"]
+      "@flow-bids/chain-interactions": ["libs/chain-interactions/src/index.ts"],
+      "@flow-bids/models": ["libs/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,4 +1,4 @@
-import { Auction } from '../models/auction';
+import { Auction } from '@flow-bids/models';
 
 export function useMyAuctions(): Auction[] {
   return [];

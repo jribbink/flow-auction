@@ -1,10 +1,7 @@
 import bootstrap from './config/bootstrap';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Home from './pages/HomePage/HomePage';
 import Layout from './components/Layout/Layout';
-import AuctionPage from './pages/AuctionPage/AuctionPage';
-import MyAuctionsPage from './pages/MyAuctionsPage/MyAuctionsPage';
 import { ROUTES } from './config/route-config';
 
 bootstrap();

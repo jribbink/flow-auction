@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Spacer, Text } from '@chakra-ui/layout';
-import { Bid } from '../../models/bid';
+import { Bid } from '@flow-bids/models';
 import { useLoggedIn } from '../../hooks/useLoggedIn';
 import { Button } from '@chakra-ui/button';
 import * as fcl from '@onflow/fcl';
@@ -21,7 +21,7 @@ export default function BiddingCard({ bids }: { bids: Bid[] }) {
 
       <Spacer></Spacer>
 
-      {loggedIn ? (
+      {loggedIn === undefined ? null : loggedIn ? (
         <Box p="2" background="white" rounded="xl">
           <Text>Place a bid</Text>
         </Box>

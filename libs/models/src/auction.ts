@@ -2,13 +2,11 @@ import { Bid } from './bid';
 
 export interface Auction {
   id: number;
-  name: string;
-  description: string;
   image: string;
-  price: number;
-  owner: string;
-  highestBidder: string;
-  highestBid: number;
+  title: string;
+  description: string;
+  bidPrice: number;
+  seller: string;
   endTime: number;
   isSold: boolean;
   bids: Bid[];

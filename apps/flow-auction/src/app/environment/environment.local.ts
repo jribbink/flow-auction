@@ -1,4 +1,5 @@
 export default {
+  evenironment: 'local',
   fcl: {
     'accessNode.api': 'http://localhost:8888',
     'discovery.wallet': 'https://fcl-discovery.onflow.org/local/authn',
@@ -8,4 +9,5 @@ export default {
     'system.contracts.FlowToken': '0x0ae53cb6e3f42a79',
     'system.contracts.LinkedAccounts': '0xf8d6e0586b0a20c7',
   },
+  apiUrl: 'http://localhost:3333/api',
 };

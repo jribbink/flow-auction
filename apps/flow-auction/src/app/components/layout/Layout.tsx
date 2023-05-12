@@ -24,7 +24,12 @@ export default function WithSubnavigation({
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box h="100vh" backgroundColor="#EEEEEE">
+    <Flex
+      h="100vh"
+      flexDir="column"
+      overflow="hidden"
+      backgroundColor="#EEEEEE"
+    >
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -35,6 +40,7 @@ export default function WithSubnavigation({
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
+        shadow="md"
       >
         <Flex
           flex={{ base: 1, md: 'auto' }}
@@ -71,10 +77,10 @@ export default function WithSubnavigation({
         <MobileNav />
       </Collapse>
 
-      <Box flexGrow={1} marginTop="3">
+      <Box paddingY="4" flex={1} overflow="scroll">
         {children}
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

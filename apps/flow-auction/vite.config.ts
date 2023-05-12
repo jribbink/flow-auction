@@ -21,15 +21,12 @@ export default defineConfig({
       name: 'raw-loader',
       enforce: 'pre',
       async transform(code, id) {
-        console.log(id);
         if (id.endsWith('.cdc')) {
           const regex = /import\s+(\w+)\s+from\s+".*"/g;
           const modifiedCode = code.replace(regex, (val) => {
             const contract = val.match(/import\s+(\w+)\s+from\s+".*"/)![1];
             return `import "${contract}"`;
           });
-
-          console.log(modifiedCode);
 
           return {
             code: `export default ${JSON.stringify(modifiedCode)};`,

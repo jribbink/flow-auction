@@ -1,3 +1,3 @@
-import { default as environmentDev } from './environment.local';
+import { default as env } from './environment.local';
 export * from './environment.local';
-export default environmentDev;
+export default env;

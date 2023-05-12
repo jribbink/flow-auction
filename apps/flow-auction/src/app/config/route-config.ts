@@ -35,7 +35,7 @@ export const ROUTES: Array<RouteConfig> = [
     inMenu: false,
   },
   {
-    path: '/auctions/:id',
+    path: '/auctions/:auctionId',
     Component: AuctionPage,
     inMenu: false,
   },

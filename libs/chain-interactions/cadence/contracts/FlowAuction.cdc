@@ -5,13 +5,23 @@ pub contract FlowAuction {
   pub event AuctionCreated(auction: Auction)
 
   pub struct Auction {
-    pub let seller: Address
     pub let id: Int
+    pub let image: String
+    pub let title: String
+    pub let description: String
+    pub let bidPrice: UFix64
+    pub let seller: Address
     pub let bids: [Bid]
+    pub let endTimestamp: UFix64
 
-    init(id: Int, seller: Address) {
-      self.seller = seller
+    init(id: Int, image: String, title: String, description: String, bidPrice: UFix64, seller: Address, endTimestamp: UFix64) {
       self.id = id
+      self.image = image
+      self.title = title
+      self.description = description
+      self.bidPrice = bidPrice
+      self.seller = seller
+      self.endTimestamp = endTimestamp
       self.bids = []
     }
 
@@ -57,10 +67,25 @@ pub contract FlowAuction {
   }
 
   // I know.  Anti-pattern.  But it's a hackathon.
-  pub fun createAuction (seller: AuthAccount): Auction {
+  pub fun createAuction (
+    seller: AuthAccount,
+    image: String,
+    title: String,
+    description: String,
+    bidPrice: UFix64,
+    endTimestamp: UFix64
+  ): Auction {
     // Create auction
     var id: Int = self.auctions.length
-    let auction = Auction(id: id, seller: seller.address)
+    let auction = Auction(
+      id: id,
+      image: image,
+      title: title,
+      description: description,
+      bidPrice: bidPrice,
+      seller: seller.address,
+      endTimestamp: endTimestamp
+    )
 
     // Add auction to list
     self.auctions.append(auction)
